@@ -1,54 +1,78 @@
 package main;
 
 import grid.Grid;
-import grid.Node;
+import grid.INode;
 
 import java.util.ArrayList;
-import java.util.Stack;
+import java.util.List;
 
 public class Star {
-    private Grid oriGrid;
+    private Grid grid;
+
+    private List<INode> openSet = new ArrayList<>();
+    private List<INode> closedSet = new ArrayList<>();
 
 
-    public Star() {
-        oriGrid = new Grid();
-        // f: fit parameter
-        // q: movement cost to move from the starting position to that node
-        // h: estimated movement cost to move from this node to the goal
+    public Star(){
+        grid = new Grid();
+        openSet.add(grid.getStartingNode());
+    }
 
-        // Init open list
-        ArrayList<Node> openList = oriGrid.dumpOpenList();
-        // Init closed list
-        Stack closeList = new Stack();
+    public String run() {
+        while (!openSet.isEmpty()){
+            INode current = getNodeWithLowestFit();
+            if (current == grid.getGoal()){
+                return pathFrom(current);
+            }
+            openSet.remove(current);
+            closedSet.add(current);
+            for(INode neighbor: current.getNeighbors()){
+                if(closedSet.contains(neighbor)){
+                    continue;
+                }
+                float h = grid.straightLineDistanceFrom(current, neighbor);
+                float tentativeGScore = current.getG() + h;
+                if(!openSet.contains(neighbor)){
+                    openSet.add(neighbor);
+                }
+                if(tentativeGScore < neighbor.getG()){
+                    neighbor.setCameFrom(current);
+                    neighbor.setG(tentativeGScore);
+                    neighbor.setH(grid.straightLineDistanceFrom(grid.getGoal(), neighbor));
+                }
+            }
+        }
+        return pathFrom(grid.getGoal());
+    }
 
-        // While open list is not empty
-        // Find the node with the least f on the open list
-        // call it q
-        Node q = oriGrid.getStartingNode();
-        // pop q off the open list
-        openList.remove(q);
-        // generate successors for q
-        oriGrid.findSuccessorsFor(q);
-        // for each successor
-        // if successor is the goal stop
+    private String pathFrom(INode current) {
+        String path = "";
 
-        // calc heuristics for the successor
-
-        // if a node with the same position as successor is in the open list
-        // and has a lower f than successor, skip it
-
-        // if a node with the same position as successor is in the closed list
-        // and has a lower f than successor, skip it
-        // otherwise, add it to the open list
-
-        // end loop
-
-        // push q on the closed list
-
+        while(current.getCameFromNode() != null){
+            path = path + current.toString() + " ";
+            current = current.getCameFromNode();
+        }
+        path = path + grid.getStartingNode().toString();
+        return path;
     }
 
 
-    public Node getNodeWithLowestFit() {
-        return oriGrid.getStartingNode();
+    public INode getNodeWithLowestFit() {
+        INode tentativeNode = openSet.get(0);
+        float lowestFit = openSet.get(0).getF();
+        for (INode n : openSet){
+            if(n.getF() < lowestFit){
+                tentativeNode = n;
+            }
+        }
+        return tentativeNode;
+    }
+
+    Grid getGrid() {
+        return grid;
+    }
+
+    public List<INode> getOpenSet() {
+        return openSet;
     }
 }

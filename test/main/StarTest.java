@@ -1,9 +1,9 @@
 package main;
 
-import grid.Node;
+import grid.INode;
 import junit.framework.TestCase;
 
-import static org.junit.Assert.*;
+import java.util.List;
 
 public class StarTest extends TestCase {
 
@@ -18,21 +18,31 @@ public class StarTest extends TestCase {
         // Given
         star = new Star();
         // When
-        Node startNode = star.getNodeWithLowestFit();
+        INode startNode = star.getNodeWithLowestFit();
         // Then
         float fitExpected = 0;
         assertEquals(startNode.getF(), fitExpected);
+        assertEquals(startNode.getG(), 0f);
         assertEquals(startNode.getX(), 0);
         assertEquals(startNode.getY(), 0);
+    }
+
+    public void testTheFirstNodeKnownIsTheStart(){
+        // Given
+        star = new Star();
+        INode startNode = star.getNodeWithLowestFit();
+        // When
+        List<INode> openList= star.getOpenSet();
+        // Then
+        assertEquals(startNode, openList.get(0));
     }
 
     public void test(){
         // Given
         star = new Star();
         // When
-        Node startNode = star.getNodeWithLowestFit();
+        System.out.println(star.run());
         // Then
-
     }
 
 }

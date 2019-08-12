@@ -1,13 +1,28 @@
 package grid;
 
+import java.util.List;
+
 public interface INode {
 
-    public float getF();
+    float getF();
+    float getG();
+    float getH();
 
-    public float getG();
+    void setG(float g);
+    void setH(float h);
 
-    public float getH();
+    int getX();
+    int getY();
 
-    public int getX();
-    public int getY();
+    void makeStarting();
+
+    void makeGoal();
+
+    List<INode> getNeighbors();
+    void setNeighbors(List<INode> neighbors);
+
+    INode getCameFromNode();
+    void setCameFrom(INode node);
+
+    String getName();
 }
