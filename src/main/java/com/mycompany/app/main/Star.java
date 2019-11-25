@@ -1,20 +1,21 @@
 package com.mycompany.app.main;
 
-import com.mycompany.app.grid.Grid;
+import com.mycompany.app.grid.SpainGrid;
+import com.mycompany.app.grid.IGrid;
 import com.mycompany.app.grid.INode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Star {
-    private Grid grid;
+    private IGrid grid;
 
     private List<INode> openSet = new ArrayList<>();
     private List<INode> closedSet = new ArrayList<>();
 
 
     public Star(){
-        grid = new Grid();
+        grid = new SpainGrid();
         openSet.add(grid.getStartingNode());
     }
 
@@ -68,7 +69,7 @@ public class Star {
         return tentativeNode;
     }
 
-    Grid getGrid() {
+    IGrid getGrid() {
         return grid;
     }
 

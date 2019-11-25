@@ -1,6 +1,6 @@
 package com.mycompany.app.grid;
 
-import com.mycompany.app.grid.Grid;
+import com.mycompany.app.grid.SpainGrid;
 import com.mycompany.app.grid.INode;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -12,7 +12,7 @@ public class GridTest extends TestCase {
     @Test
     public void testGetStartingNode() {
         // Given
-        Grid grid = new Grid();
+        IGrid grid = new SpainGrid();
         // When
         INode startingNode = grid.getStartingNode();
         // Then

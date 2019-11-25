@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Grid {
+public class SpainGrid implements IGrid {
     private List<INode> totalSet = new ArrayList<>(4);
     private INode start;
     private INode goal;
 
-    public Grid() {
+    public SpainGrid() {
         Node madrid = new Node(0, 0, "Madrid");
         Node valencia = new Node(110, 0, "Valencia");
         Node barcelona = new Node(100, 100, "Barcelona");
