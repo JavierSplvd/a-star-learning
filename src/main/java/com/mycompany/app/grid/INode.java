@@ -4,12 +4,12 @@ import java.util.List;
 
 public interface INode {
 
-    float getF();
-    float getG();
-    float getH();
+    float getTotalCost();
+    float getAccumulatedCost();
+    float getCostToGoal();
 
-    void setG(float g);
-    void setH(float h);
+    void setAccumulatedCost(float g);
+    void setCostToGoal(float h);
 
     int getX();
     int getY();
@@ -22,7 +22,7 @@ public interface INode {
     void setNeighbors(List<INode> neighbors);
 
     INode getCameFromNode();
-    void setCameFrom(INode node);
+    void cameFrom(INode node);
 
     String getName();
 }

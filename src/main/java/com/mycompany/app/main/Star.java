@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Star {
+
     private IGrid grid;
 
     private List<INode> openSet = new ArrayList<>();
@@ -21,25 +22,25 @@ public class Star {
 
     public String run() {
         while (!openSet.isEmpty()){
-            INode current = getNodeWithLowestFit();
-            if (current == grid.getGoal()){
-                return pathFrom(current);
+            INode currentNode = getNodeWithLowestFit();
+            if (currentNode == grid.getGoal()){
+                return pathFrom(currentNode);
             }
-            openSet.remove(current);
-            closedSet.add(current);
-            for(INode neighbor: current.getNeighbors()){
+            openSet.remove(currentNode);
+            closedSet.add(currentNode);
+            for(INode neighbor: currentNode.getNeighbors()){
                 if(closedSet.contains(neighbor)){
                     continue;
                 }
-                float h = grid.straightLineDistanceFrom(current, neighbor);
-                float tentativeGScore = current.getG() + h;
+                float distanceToNeighbor = grid.straightLineDistanceFrom(currentNode, neighbor);
+                float tentativeAccumulatedScore = currentNode.getAccumulatedCost() + distanceToNeighbor;
                 if(!openSet.contains(neighbor)){
                     openSet.add(neighbor);
                 }
-                if(tentativeGScore < neighbor.getG()){
-                    neighbor.setCameFrom(current);
-                    neighbor.setG(tentativeGScore);
-                    neighbor.setH(grid.straightLineDistanceFrom(grid.getGoal(), neighbor));
+                if(tentativeAccumulatedScore < neighbor.getAccumulatedCost()){
+                    neighbor.cameFrom(currentNode);
+                    neighbor.setAccumulatedCost(tentativeAccumulatedScore);
+                    neighbor.setCostToGoal(grid.straightLineDistanceFrom(grid.getGoal(), neighbor));
                 }
             }
         }
@@ -60,10 +61,10 @@ public class Star {
 
     public INode getNodeWithLowestFit() {
         INode tentativeNode = openSet.get(0);
-        float lowestFit = openSet.get(0).getF();
-        for (INode n : openSet){
-            if(n.getF() < lowestFit){
-                tentativeNode = n;
+        float lowestFit = openSet.get(0).getTotalCost();
+        for (INode node : openSet){
+            if(node.getTotalCost() < lowestFit){
+                tentativeNode = node;
             }
         }
         return tentativeNode;

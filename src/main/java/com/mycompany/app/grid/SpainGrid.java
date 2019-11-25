@@ -24,10 +24,10 @@ public class SpainGrid implements IGrid {
         totalSet.add(bilbao);
         setAsStart(0);
         setAsGoal(2);
-        madrid.setH(straightLineDistanceFrom(madrid, goal));
-        valencia.setH(straightLineDistanceFrom(valencia, goal));
-        bilbao.setH(straightLineDistanceFrom(bilbao, goal));
-        barcelona.setH(straightLineDistanceFrom(barcelona, goal));
+        madrid.setCostToGoal(straightLineDistanceFrom(madrid, goal));
+        valencia.setCostToGoal(straightLineDistanceFrom(valencia, goal));
+        bilbao.setCostToGoal(straightLineDistanceFrom(bilbao, goal));
+        barcelona.setCostToGoal(straightLineDistanceFrom(barcelona, goal));
 
 
     }

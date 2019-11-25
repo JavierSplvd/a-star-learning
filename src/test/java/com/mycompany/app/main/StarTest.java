@@ -21,9 +21,9 @@ public class StarTest extends TestCase {
         // When
         INode startNode = star.getNodeWithLowestFit();
         // Then
-        float fitExpected = 0;
-        assertEquals(startNode.getF(), fitExpected);
-        assertEquals(startNode.getG(), 0f);
+        float fitExpected = 20000;
+        assertEquals(startNode.getTotalCost(), fitExpected);
+        assertEquals(startNode.getAccumulatedCost(), 0f);
         assertEquals(startNode.getX(), 0);
         assertEquals(startNode.getY(), 0);
     }
@@ -38,12 +38,5 @@ public class StarTest extends TestCase {
         assertEquals(startNode, openList.get(0));
     }
 
-    public void test(){
-        // Given
-        star = new Star();
-        // When
-        System.out.println(star.run());
-        // Then
-    }
 
 }

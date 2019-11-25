@@ -8,8 +8,8 @@ public class Node implements INode {
     private int x;
     private int y;
 
-    private float gScore = 1000000;
-    private float heuristic = 0;
+    private float accumulatedCost = Float.MAX_VALUE;
+    private float costToGoal = 0;
 
     private boolean isGoal = false;
 
@@ -30,32 +30,32 @@ public class Node implements INode {
 
     @Override
     public void makeStarting() {
-        gScore = 0;
+        accumulatedCost = 0;
     }
 
     @Override
-    public float getF() {
-        return gScore+heuristic;
+    public float getTotalCost() {
+        return accumulatedCost+costToGoal;
     }
 
     @Override
-    public float getG() {
-        return gScore;
+    public float getAccumulatedCost() {
+        return accumulatedCost;
     }
 
     @Override
-    public float getH() {
-        return heuristic;
+    public float getCostToGoal() {
+        return costToGoal;
     }
 
     @Override
-    public void setG(float g) {
-        this.gScore = g;
+    public void setAccumulatedCost(float g) {
+        this.accumulatedCost = g;
     }
 
     @Override
-    public void setH(float h) {
-        this.heuristic = h;
+    public void setCostToGoal(float h) {
+        this.costToGoal = h;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class Node implements INode {
     }
 
     @Override
-    public void setCameFrom(INode node) {
+    public void cameFrom(INode node) {
         cameFromNode = node;
     }
 
@@ -95,7 +95,7 @@ public class Node implements INode {
 
     @Override
     public String toString() {
-        return name + " g:" + getG() + " h:" + getH() + " f:" + getF();
+        return name + " g:" + getAccumulatedCost() + " h:" + getCostToGoal() + " f:" + getTotalCost();
     }
 
 }
